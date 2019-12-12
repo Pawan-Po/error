@@ -1,5 +1,5 @@
 
-const Post = require('../models/PostModel').Post;
+const Post = require('../models/PostModel');
 module.exports ={
     index: (req, res)=>{
 
@@ -13,7 +13,24 @@ module.exports ={
     },
 
     submitposts: (req,res) => {
-        const newPost = new Post({
+      
+
+    const post =  new Post({
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status
+    });
+
+    post.save().then(post=>{
+        console.log("successfully post");
+        req.flash('success-message', 'Post created sucessfully.');
+        res.redirect('/admin/posts');
+    }).catch(error=>console.log(error));
+
+    console.log(Post);
+
+     res.redirect("/admin/posts");
+        /*const newPost = new post({
             title: req.body.title,
             description: req.body.description,
             status: req.body.status
@@ -23,7 +40,7 @@ module.exports ={
             console.log(posts);
             req.flash('success-message', 'Post created sucessfully.');
             res.redirect('/admin/posts');
-        });
+        });*/
        
     },
 
